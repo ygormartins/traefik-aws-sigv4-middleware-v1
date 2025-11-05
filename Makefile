@@ -21,5 +21,5 @@ clean:
 
 .PHONY: mc
 mc:
-	mc mb -p play/traefikAwsSigv4Middlewarev1
-	echo "<h1>hi</h1>" | mc pipe play/traefikAwsSigv4Middlewarev1/index.html
+	mc mb -p play/traefikAwsSigvFourMid
+	echo "<h1>hi</h1>" | mc pipe play/traefikAwsSigvFourMid/index.html
