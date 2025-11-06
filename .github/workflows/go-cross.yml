@@ -7,7 +7,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       CGO_ENABLED: 0
-    needs: prepare
     strategy:
       matrix:
         go-version: [1.22, 1.x]
