@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 
-	plugin "github.com/ygormartins/traefikAwsSigv4Middlewarev1"
+	plugin "github.com/ygormartins/traefik-aws-sigv4-middleware-v1"
 
 	"testing"
 )

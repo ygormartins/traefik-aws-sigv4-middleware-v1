@@ -1,7 +1,7 @@
 displayName: Sigv4 Auth for AWS
 type: middleware
 
-import: github.com/ygormartins/traefikAwsSigv4Middlewarev1
+import: github.com/ygormartins/traefik-aws-sigv4-middleware-v1
 
 summary: Sign AWS requests using Sigv4
 
