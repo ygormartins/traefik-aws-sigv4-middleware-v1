@@ -52,8 +52,8 @@ func (p *Plugin) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	payloadHash := sha256.Sum256(payload)
 
-	canonicalHeaders := fmt.Sprintf("host:%s\nx-amz-date:%s\n",
-		host, amzDate)
+	canonicalHeaders := fmt.Sprintf("host:%s\nx-amz-content-sha256:%s\nx-amz-date:%s\n",
+		host, hex.EncodeToString(payloadHash[:]), amzDate)
 
 	if p.SessionToken != nil {
 		r.Header.Set("X-Amz-Security-Token", *p.SessionToken)
