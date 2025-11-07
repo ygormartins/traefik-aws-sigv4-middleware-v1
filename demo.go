@@ -83,6 +83,8 @@ func (p *Plugin) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	r.Header.Set("X-Amz-Content-Sha256", hex.EncodeToString(payloadHash[:]))
 	r.Header.Set("Authorization", authorization)
 
+	os.Stdout.WriteString("{PLUGIN} REQ header Authorization " + authorization + "\n")
+
 	p.next.ServeHTTP(w, r)
 }
 
