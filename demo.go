@@ -10,7 +10,6 @@ import (
 	"io"
 	"net/http"
 	"time"
-	"os"
 )
 
 type Config struct {
@@ -46,10 +45,6 @@ func (p *Plugin) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	signedHeaders := "host;x-amz-content-sha256;x-amz-date"
 	algorithm := "AWS4-HMAC-SHA256"
 
-	os.Stdout.WriteString("{PLUGIN} REQ host " + r.Host + "\n")
-	os.Stdout.WriteString("{PLUGIN} CNF host " + p.Endpoint + "\n")
-	os.Stdout.WriteString("{PLUGIN} uri " + r.URL.String() + "\n")
-
 	var payload []byte
 	if r.Body != nil {
 		payload, _ = io.ReadAll(r.Body)
@@ -82,8 +77,6 @@ func (p *Plugin) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	r.Header.Set("X-Amz-Date", amzDate)
 	r.Header.Set("X-Amz-Content-Sha256", hex.EncodeToString(payloadHash[:]))
 	r.Header.Set("Authorization", authorization)
-
-	os.Stdout.WriteString("{PLUGIN} REQ header Authorization " + authorization + "\n")
 
 	p.next.ServeHTTP(w, r)
 }
