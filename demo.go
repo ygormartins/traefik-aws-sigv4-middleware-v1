@@ -31,6 +31,7 @@ type Plugin struct {
 	Service      string  `json:"service"`
 	Endpoint     string  `json:"endpoint"`
 	Region       string  `json:"region"`
+	logger       log.Logger
 }
 
 func (p *Plugin) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -46,9 +47,9 @@ func (p *Plugin) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	signedHeaders := "host;x-amz-content-sha256;x-amz-date"
 	algorithm := "AWS4-HMAC-SHA256"
 
-	log.Println("{PLUGIN} REQ host", r.Host)
-	log.Println("{PLUGIN} CNF host", p.Endpoint)
-	log.Println("{PLUGIN} uri", r.URL.String())
+	p.logger.Infof("{PLUGIN} REQ host %s", r.Host)
+	p.logger.Infof("{PLUGIN} CNF host %s", p.Endpoint)
+	p.logger.Infof("{PLUGIN} uri %s", r.URL.String())
 
 	var payload []byte
 	if r.Body != nil {
@@ -90,7 +91,11 @@ func CreateConfig() *Config {
 	return &Config{}
 }
 
-func New(_ context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
+func New(ctx context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
+	logger := log.FromContext(ctx)
+	logger.Infof("SigV4 middleware %s initialized", name)
+
+
 	return &Plugin{
 		name:         name,
 		next:         next,
@@ -100,6 +105,7 @@ func New(_ context.Context, next http.Handler, config *Config, name string) (htt
 		Service:      config.Service,
 		Endpoint:     config.Endpoint,
 		Region:       config.Region,
+		logger:       logger,
 	}, nil
 }
 
