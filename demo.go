@@ -1,4 +1,4 @@
-package sigv4middleware
+package traefik_aws_sigv4_middleware_v1
 
 import (
 	"bytes"

@@ -1,4 +1,4 @@
-package sigv4middleware_test
+package traefik_aws_sigv4_middleware_v1_test
 
 import (
 	"context"
